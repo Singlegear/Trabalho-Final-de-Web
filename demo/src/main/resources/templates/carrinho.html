@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Carrinho | NeoSakura</title>
+	<link rel="stylesheet" href="/css/estilos.css" />
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/form.css">
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="w3-center">
+		<img src="/img/logo03.png" />
+		<br>
+
+		<header id="cabecalho">
+			<nav id="menu">
+				<h1>Menu Principal</h1>
+				<ul type="disc">
+					<li>
+						<a th:href="@{/produto/home}">Home</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/books}">Livros</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/accessories}">Acessórios</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/bedroom}">Quarto</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/used}">Usados</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/carrinho}" sec:authorize="(isAuthenticated()) and !(hasRole('ROLE_ADMIN'))">Carrinho</a>
+					</li>
+					<li>
+						<a th:href="@{/login/io}" sec:authorize="!(isAuthenticated())">Login</a>
+					</li>
+					<li>
+						<a th:href="@{/registrar}" sec:authorize="!(isAuthenticated())">Registre-se</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/cadastrarproduto}" sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar Produtos</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/listar}" sec:authorize="hasRole('ROLE_ADMIN')">Listar Produtos</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</header>
+	</div>
+		<br>
+		<br>
+	
+	<!-- 	<br>
+		<br>
+		<br>
+	
+	
+		<br> -->
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Codigo</th>
+      			<th scope="col">Nome</th>
+      			<th scope="col">Quantidade</th>
+      			<th scope="col">Preço</th>
+      			<th scope="col">Imagem</th>
+      			<th scope="col"></th>
+      			<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="produto : ${produtos}">
+				<td th:text="${produto.id}"></td>
+				<td th:text="${produto.nome}"></td>
+				<td th:text="${#numbers.formatDecimal(produto.preco, 0, 'POINT', 2, 'COMMA')}" id="preco"></td>
+				<td th:text="${produto.qtd}"></td>
+				<td><img th:src="@{'/images/'+${produto.nome}+.png}" width="40px"></td>
+				
+				<td><a th:href="@{/produto/carrinho/remover/{id}(id = ${produto.id})}"> <button type="button" class="btn btn-danger">Remover</button></a></td>
+				<td><a th:href="@{/produto/vizualizar/{id}(id = ${produto.id})}"> <button type="button" class="btn btn-success">Vizualizar</button></a>
+			</tr>	
+			
+		</tbody>
+		
+		<table>
+				<tr style="right: 0; position: absolute;">
+			<td>
+				<a th:href="@{/produto/home}">
+					<button type="submit" class="btn btn-primary">Continuar comprando</button>
+				</a>
+			</td>
+			
+			<td>
+				<a th:href="@{/produto/historico/}">
+					<button type="submit" class="btn btn-primary">Meu historico</button>
+				</a>
+			</td>
+			
+			<td>
+				<a th:href="@{/produto/carrinho/cancelar}">
+					<button type="submit" class="btn btn-danger">Cancelar compra</button>
+				</a>
+			</td>
+	
+		
+			<td>
+				<a th:href="@{/produto/carrinho/salvar}">
+					<button type="submit" class="btn btn-success">Confirmar compra</button>
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td ><h3 style="color: red;">Total da compra:
+				<samp style="color: blue;"  th:text="${#numbers.formatDecimal(valor, 0 ,'POINT',2,'COMMA')}"></samp>
+				</h3>
+			</td>
+		</tr>
+		
+		</table>
+		<br>
+	</table>
+
+</body>
+</html>

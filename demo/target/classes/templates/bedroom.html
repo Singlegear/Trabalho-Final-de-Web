@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Quarto | NeoSakura</title>
+	<link rel="stylesheet" href="/css/estilos.css" />
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+</head>
+
+<body>
+	<div class="w3-center">
+		<img src="/img/logo03.png" />
+		<br>
+
+		<header id="cabecalho">
+			<nav id="menu">
+				<h1>Menu Principal</h1>
+				<ul type="disc">
+					<li>
+						<a th:href="@{/produto/home}">Home</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/books}">Livros</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/accessories}">Acessórios</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/bedroom}">Quarto</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/used}">Usados</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/carrinho}" sec:authorize="(isAuthenticated()) and !(hasRole('ROLE_ADMIN'))">Carrinho</a>
+					</li>
+					<li>
+						<a th:href="@{/login/io}" sec:authorize="!(isAuthenticated())">Login</a>
+					</li>
+					<li>
+						<a th:href="@{/registrar}" sec:authorize="!(isAuthenticated())">Registre-se</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/cadastrarproduto}" sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar Produtos</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/listar}" sec:authorize="hasRole('ROLE_ADMIN')">Listar Produtos</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</header>
+	</div>
+	<div class="conteiner">
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+
+		<div>
+			<p class="titulo">
+				<font size=32 face="Base">
+					Posters
+				</font>
+			</p>
+		</div>
+
+		<br>
+		<br>
+
+		<div class="row">
+			<div class="col col-3" th:each="poster: ${quartoposter}">
+				<div class="card">
+					<img th:src="@{'/images/' + ${poster.nome} + '.png'}" />
+					<h5 style="text-align: center" th:text="${poster.nome}">
+						
+					</h5>
+					<p class="preco" th:text="'R$ '+ ${#numbers.formatDecimal(poster.preco, 0 ,'POINT',2,'COMMA')}"></p>
+					<a th:href="@{/produto/vizualizar/{id}(id = ${poster.id})}"> <button type="button" ></button>Comprar</a>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<br>
+		<div>
+			<p class="titulo">
+				<font size=32 face="Base">
+					Quadros
+				</font>
+			</p>
+		</div>
+		<br>
+		<br>
+		
+		<div class="row">
+			<div class="col col-3" th:each="quadro: ${quartoquadro}">
+				<div class="card">
+					<img th:src="@{'/images/' + ${quadro.nome} + '.png'}" />
+					<h5 style="text-align: center" th:text="${quadro.nome}">
+						
+					</h5>
+					<p class="preco" th:text="'R$ '+ ${#numbers.formatDecimal(quadro.preco, 0 ,'POINT',2,'COMMA')}"></p>
+					<a th:href="@{/produto/vizualizar/{id}(id = ${quadro.id})}"> <button type="button" ></button>Comprar</a>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<br>
+		<br>
+		<div>
+			<p>Copyright&copy; reserved by NeoSakura - Fone: (88) 994960554</p>
+			<p>2017 - 2018</p>
+			<p>Developed by Luis Henrique de Pinho Junior</p>
+		</div>
+	</div>
+</body>
+
+</html>

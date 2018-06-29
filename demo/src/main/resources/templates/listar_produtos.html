@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Listar | NeoSakura</title>
+	<link rel="stylesheet" href="/css/estilos.css" />
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+	
+</head>
+
+<body>
+	<div class="w3-center">
+		<img src="/img/logo03.png" />
+		<br>
+
+		<header id="cabecalho">
+			<nav id="menu">
+				<h1>Menu Principal</h1>
+				<ul type="disc">
+					<li>
+						<a th:href="@{/produto/home}">Home</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/books}">Livros</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/accessories}">Acessórios</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/bedroom}">Quarto</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/used}">Usados</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/carrinho}" sec:authorize="(isAuthenticated()) and !(hasRole('ROLE_ADMIN'))">Carrinho</a>
+					</li>
+					<li>
+						<a th:href="@{/login/io}" sec:authorize="!(isAuthenticated())">Login</a>
+					</li>
+					<li>
+						<a th:href="@{/registrar}" sec:authorize="!(isAuthenticated())">Registre-se</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/cadastrarproduto}" sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar Produtos</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/listar}" sec:authorize="hasRole('ROLE_ADMIN')">Listar Produtos</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</header>
+	</div>
+	<br>
+	<br>
+	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Codigo</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Preço</th>
+      <th scope="col">Quantidade</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Descrição</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="produto: ${todosOsProdutos}">
+      <td th:text="${produto.id}"></td>
+      <td th:text="${produto.nome}"></td>
+      <td th:text="${produto.qtd}"></td>
+      <td th:text="${produto.categoria}"></td>
+      <td th:text="${produto.descricao}"></td>
+      <td> <a th:href="@{/produto/remover/{id}(id = ${produto.id})}"> <button type="button" >Excluir</button> </a> </td>
+      <td> <a th:href="@{/produto/atualizar/{id}(id = ${produto.id})}"> <button type="button" >Atualizar</button>  </a> </td>
+      <td> <img alt="" th:src="@{'/images/'+${produto.nome}+.png}"/> </td>
+    </tr>
+    <tr>
+</body>
+</html>

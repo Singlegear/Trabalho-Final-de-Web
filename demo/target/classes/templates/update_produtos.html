@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Update | NeoSakura</title>
+	<link rel="stylesheet" href="/css/estilos.css" />
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+
+</head>
+
+<body>
+	<div class="w3-center">
+		<img src="/img/logo03.png" />
+		<br>
+		<header id="cabecalho">
+			<nav id="menu">
+				<h1>Menu Principal</h1>
+				<ul type="disc">
+					<li>
+						<a th:href="@{/produto/home}">Home</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/books}">Livros</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/accessories}">Acessórios</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/bedroom}">Quarto</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/used}">Usados</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/carrinho}" sec:authorize="(isAuthenticated()) and !(hasRole('ROLE_ADMIN'))">Carrinho</a>
+					</li>
+					<li>
+						<a th:href="@{/login/io}" sec:authorize="!(isAuthenticated())">Login</a>
+					</li>
+					<li>
+						<a th:href="@{/registrar}" sec:authorize="!(isAuthenticated())">Registre-se</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/cadastrarproduto}" sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar Produtos</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/listar}" sec:authorize="hasRole('ROLE_ADMIN')">Listar Produtos</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</header>
+	
+	<form action="/produto/save" method="post" enctype="multipart/form-data" th:object="${produto}"> 
+		<input type="hidden" th:field="*{id}"> 
+		
+		<label>Nome</label>
+		<input type="text" th:field="*{nome}">
+		
+		<label> Preço</label>
+		<input type="text" th:field="*{preco}">
+		
+		<label> Quantidade</label>
+		<input type="number" th:field="*{qtd}">
+		
+		<label> Categoria</label>
+			<select th:field="*{categoria}" >
+				<option value="">--</option>
+				<option value="manga">Mangás</option>
+				<option value="hq">HQ's</option>
+				<option value="acessorio1">Acessorios: Colar</option>
+				<option value="acessorio2">Acessorios: Pulseiras e Braceletes</option>
+				<option value="acessorio3">Acessorios: Aneis</option>
+				<option value="usadoa">Usados: Avulsos</option>
+				<option value="usadoc">Usados: Coleções</option>
+				<option value="quartop">Quarto: Posters</option>
+				<option value="quartoq">Quarto: Quadros</option>
+			</select>
+		
+		<label> Descrição</label>
+		<input type="text" th:field="*{descricao}">
+		
+		<label> Colocar em promoção?</label>
+			<select th:field="*{promocao}" >
+				<option value="true">Sim</option>
+				<option value="false">Não</option>
+			</select>
+			
+		Selecione Imagem: <input type="file" name="imagem">
+		
+		<input type="submit" value="Cadastrar">
+	</form>
+</body>
+</html>

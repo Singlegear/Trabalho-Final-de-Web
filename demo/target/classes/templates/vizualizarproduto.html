@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>View | NeoSakura</title>
+	<link rel="stylesheet" href="/css/estilos.css" />
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/form.css">
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+</head>
+
+<body>
+	<div class="w3-center">
+		<img src="/img/logo03.png" />
+		<br>
+
+		<header id="cabecalho">
+			<nav id="menu">
+				<h1>Menu Principal</h1>
+				<ul type="disc">
+					<li>
+						<a th:href="@{/produto/home}">Home</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/books}">Livros</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/accessories}">Acessórios</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/bedroom}">Quarto</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/used}">Usados</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/carrinho}" sec:authorize="(isAuthenticated()) and !(hasRole('ROLE_ADMIN'))">Carrinho</a>
+					</li>
+					<li>
+						<a th:href="@{/login/io}" sec:authorize="!(isAuthenticated())">Login</a>
+					</li>
+					<li>
+						<a th:href="@{/registrar}" sec:authorize="!(isAuthenticated())">Registre-se</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/cadastrarproduto}" sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar Produtos</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/listar}" sec:authorize="hasRole('ROLE_ADMIN')">Listar Produtos</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</header>
+	</div>
+		<br>
+		<br>
+		
+		<div class="row">
+			<div class="col col-2">
+				<p><img alt="" th:src="@{'/images/'+${produto.nome}+.png}"/></p>
+				<br>
+				<p th:text="${produto.nome}"></p>
+				<br>
+				<h4 th:text="${produto.descricao}"></h4>
+				
+			</div>
+			<div class="col col-2">
+					<div>
+						
+							<font size=40 face="Filxgirl">
+								<p class="titulo" th:text="${produto.nome}"></p>
+							</font>
+						
+						
+					</div>
+					
+					<h3 th:text="'R$ '+ ${#numbers.formatDecimal(produto.preco, 0 ,'POINT',2,'COMMA')}"></h3>
+					
+					<a th:href="@{/produto/carrinho/{id}(id = ${produto.id})}"> <button type="button"></button>Comprar</a>
+				
+			</div>
+		</div>
+	
+</body>
+</html>

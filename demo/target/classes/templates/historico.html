@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+	<meta charset="UTF-8">
+	
+	<title>Historico | NeoSakura</title>
+	
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+
+	
+	<table class="table">
+  <thead>
+    <tr>
+      
+      <th scope="col">Nome</th>
+      <th scope="col">Preço</th>
+      <th scope="col">Quantidade</th>
+
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="produto: ${historico}">
+      <td th:text="${produto.pnome}"></td>
+      <td th:text="${produto.preco}"></td>
+      <td th:text="${produto.qtd}"></td>
+      
+      <td> <img alt="" th:src="@{'/images/'+${produto.pnome}+.png}"/> </td>
+    </tr>
+    <tr>
+    </tr>
+    </tbody>
+    </table>
+</body>
+</html>

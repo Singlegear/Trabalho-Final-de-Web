@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NeoSakura</title>
+	<link rel="stylesheet" href="/css/estilos.css" />
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+	<style>
+		.mySlides {
+			display: none
+		}
+
+		.w3-left,
+		.w3-right,
+		.w3-badge {
+			cursor: pointer
+		}
+
+		.w3-badge {
+			height: 13px;
+			width: 13px;
+			padding: 0
+		}
+	</style>
+</head>
+
+<body>
+	<div class="w3-center">
+		<img src="/img/logo03.png" />
+		<br>
+
+		<header id="cabecalho">
+			<nav id="menu">
+				<h1>Menu Principal</h1>
+				<ul type="disc">
+					<li>
+						<a th:href="@{/produto/home}">Home</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/books}">Livros</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/accessories}">Acessórios</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/bedroom}">Quarto</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/used}">Usados</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/carrinho}" sec:authorize="(isAuthenticated()) and !(hasRole('ROLE_ADMIN'))">Carrinho</a>
+					</li>
+					<li>
+						<a th:href="@{/login/io}" sec:authorize="!(isAuthenticated())">Login</a>
+					</li>
+					<li>
+						<a th:href="@{/registrar}" sec:authorize="!(isAuthenticated())">Registre-se</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/cadastrarproduto}" sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar Produtos</a>
+					</li>
+					<li>
+						<a th:href="@{/produto/listar}" sec:authorize="hasRole('ROLE_ADMIN')">Listar Produtos</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</header>
+		<br>
+		<br>
+		<br>
+	</div>
+	<div class="conteiner">
+
+		<div class="w3-content w3-display-container" style="max-width:800px">
+			<img class="mySlides" src="/img/slide01.png" style="width:100%">
+			<img class="mySlides" src="/img/slide02.jpg" style="width:100%">
+			<img class="mySlides" src="/img/slide03.png" style="width:100%">
+			<div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+				<div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+				<div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+				<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+				<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+				<span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+			</div>
+		</div>
+		<script>
+			var slideIndex = 1;
+			showDivs(slideIndex);
+
+			function plusDivs(n) {
+				showDivs(slideIndex += n);
+			}
+
+			function currentDiv(n) {
+				showDivs(slideIndex = n);
+			}
+
+			function showDivs(n) {
+				var i;
+				var x = document.getElementsByClassName("mySlides");
+				var dots = document.getElementsByClassName("demo");
+				if (n > x.length) { slideIndex = 1 }
+				if (n < 1) { slideIndex = x.length }
+				for (i = 0; i < x.length; i++) {
+					x[i].style.display = "none";
+				}
+				for (i = 0; i < dots.length; i++) {
+					dots[i].className = dots[i].className.replace(" w3-white", "");
+				}
+				x[slideIndex - 1].style.display = "block";
+				dots[slideIndex - 1].className += " w3-white";
+			}
+		</script>
+		<br>
+		<br>
+
+		<div>
+			<p class="offer">
+				<font face="aerosol">
+					Ofertas por tempo limitado
+				</font>
+			</p>
+		</div>
+		<br>
+		<br>
+		<div class="row">
+			<div class="col col-3" th:each="promocao: ${promocoes}">
+				<div class="card">
+					<img th:src="@{'/images/' + ${promocao.nome} + '.png'}" />
+					<h5 style="text-align: center" th:text="${promocao.nome}">
+					</h5>
+					<p style="color: red" class="preco" th:text="'R$ '+ ${#numbers.formatDecimal(promocao.preco, 0 ,'POINT',2,'COMMA')}"></p>
+					<a th:href="@{/produto/vizualizar/{id}(id = ${promocao.id})}"> <button type="button" ></button>Comprar</a>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<div>
+			<p>Copyright&copy; reserved by NeoSakura - Fone: (88) 994960554</p>
+			<p>2017 - 2018</p>
+			<p>Developed by Luis Henrique de Pinho Junior</p>
+		</div>
+	</div>
+</body>
+
+</html>

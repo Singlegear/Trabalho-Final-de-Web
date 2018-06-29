@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/salvar" method="post" th:object="${usuario}">
+	<!-- <input type="hidden" th:field="*{id}"> -->
+		<label> CPF</label>
+		<input type="number" name="id">
+		<label>Nome</label>
+		<input type="text" name="nome">
+		<label> Data de Nascimento</label>
+		<input type="date" name="dataNasc">
+		<label> Endereço</label>
+		<input type="text" name="endereco">
+		<label> Login</label>
+		<input type="text" name="login">
+		<label> Senha</label>
+		<input type="text" name="senha">
+		<input type="submit" value="Cadastrar">
+	</form>
+</body>
+</html>
